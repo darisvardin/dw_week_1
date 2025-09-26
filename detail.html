@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+        <div class="container">
+            <div class="nav-logo">
+                <a href="index.html">Portfolio</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="project.html">My Project</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a class="btn btn-dark rounded-pill px-4" href="contact.html">Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="content-card" id="detailCard">
+                <h1 class="form-title">Project Detail</h1>
+                <div id="detailContent">Loading...</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const detailContent = document.getElementById('detailContent');
+            if (!id) {
+                detailContent.innerHTML = '<p>Project not found.</p>';
+                return;
+            }
+            const projects = JSON.parse(localStorage.getItem('projects')) || [];
+            const project = projects.find(p => p.id == id);
+            if (!project) {
+                detailContent.innerHTML = '<p>Project not found.</p>';
+                return;
+            }
+            detailContent.innerHTML = `
+                ${project.imageData ? `<img src="${project.imageData}" alt="Project Image" style="max-width:500px;max-height:400px;border-radius:10px;margin-bottom:20px;" />` : ''}
+                <h2>${project.name}</h2>
+                <p><strong>Start:</strong> ${project.startDate}</p>
+                <p><strong>End:</strong> ${project.endDate}</p>
+                <p><strong>Technologies:</strong> ${project.technologies.map(t => `<span class='tech-tag'>${t}</span>`).join(' ')}</p>
+                <p><strong>Description:</strong><br>${project.description}</p>
+                <a href="project.html" class="btn btn-dark mt-3">Back to Project List</a>
+            `;
+        });
+    </script>
+</body>
+</html>

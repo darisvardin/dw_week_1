@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal web site</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+        <div class="container">
+            <div class="nav-logo">
+                <a href="index.html">Portfolio</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-semibold" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="project.html">My Project</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a class="btn btn-dark rounded-pill px-4" href="contact.html">Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main-wrapper">
+        <div class="container">
+
+            <div class="form-container">
+                <h1 class="form-title">ADD MY PROJECT</h1>
+                <form id="project-form">
+                    <div class="mb-3">
+                        <label for="projectName">Project Name</label>
+                        <input type="text" id="projectName" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3 tech-checkboxes">
+                        <label>Technologies</label>
+                        <div>
+                            <input type="checkbox" value="Node.js" id="nodejs">
+                            <label for="nodejs">Node.js</label>
+                            <input type="checkbox" value="Next.js" id="nextjs">
+                            <label for="nextjs">Next.js</label>
+                            <input type="checkbox" value="React.js" id="reactjs">
+                            <label for="reactjs">React.js</label>
+                            <input type="checkbox" value="TypeScript" id="typescript">
+                            <label for="typescript">TypeScript</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="projectImage">Upload Image</label>
+                        <input type="file" id="projectImage" accept="image/*">
+                        <div id="imagePreviewContainer" style="margin-top:10px; display:none;">
+                            <img id="imagePreview" src="" alt="Preview" style="max-width:150px; max-height:150px; border-radius:8px;" />
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-dark rounded-pill px-5 py-2">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center fw-bold mb-5">MY PROJECT</h2>
+                    <div class="row" id="project-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="app.js"></script>
+        <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('projectImage');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const previewImg = document.getElementById('imagePreview');
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        previewImg.src = ev.target.result;
+                        previewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    previewImg.src = '';
+                    previewContainer.style.display = 'none';
+                }
+            });
+        });
+        </script>
+</body>
+</html>
